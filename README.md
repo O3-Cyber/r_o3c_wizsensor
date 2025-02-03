@@ -1,4 +1,4 @@
-# Role Name: `r_o3c_wizsensor`
+# `r_o3c_wizsensor`
 
 This role manages the deployment and configuration of the Wiz Sensor. It performs tasks such as fetching API keys, creating service accounts, configuring environment files, and installing the Wiz Sensor on Debian-based and Red Hat-based systems. It also installs a SELinux Policy if SELinux is enforced.
 
