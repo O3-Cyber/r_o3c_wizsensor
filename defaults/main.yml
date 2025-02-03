@@ -1,0 +1,16 @@
+---
+#Service Account and API communication
+wiz_api_client_id: ""
+wiz_api_client_secret: ""
+wiz_api_endpoint_url: "https://api.eu14.app.wiz.io/graphql"
+wiz_api_auth_url: "https://auth.app.wiz.io/oauth/token"
+wiz_api_bearer_token: ""
+wiz_api_audience: "wiz-api"
+sensor_sa_name: "sensor-sa-{{ ansible_hostname }}"
+## Wiz Sensor
+sensor_proxy_url: ""
+http_proxy: false
+sensor_api_client_id: ""
+sensor_api_client_secret: ""
+## RHS
+rhs_enabled: true

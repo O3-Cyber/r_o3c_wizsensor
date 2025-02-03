@@ -1,0 +1,7 @@
+module wiz-sensor 1.0;
+require {
+        type unconfined_service_t;
+        class bpf { map_create map_read map_write prog_load prog_run };
+}
+#============= unconfined_service_t ==============
+allow unconfined_service_t self:bpf { map_create map_read map_write prog_load prog_run };

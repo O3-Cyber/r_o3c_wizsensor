@@ -1,0 +1,14 @@
+---
+- name: Check if SELinux is enforced
+  ansible.builtin.debug:
+    msg: "SELinux is {{ ansible_facts['selinux']['status'] }} with mode {{ ansible_facts['selinux']['mode'] }}"
+
+- name: Install SELinux policy if SELinux is enforcing
+  ansible.builtin.include_tasks: install-selinux-policy.yml
+  when: ansible_facts['selinux']['status'] == 'enabled' and ansible_facts['selinux']['mode'] == 'enforcing'
+
+- name: Create Service Account for Sensor
+  ansible.builtin.include_tasks: create-service-account.yml
+
+- name: Install Wiz Sensor with script
+  ansible.builtin.include_tasks: install-sensor.yml

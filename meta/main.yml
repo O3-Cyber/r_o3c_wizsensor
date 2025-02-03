@@ -1,0 +1,50 @@
+galaxy_info:
+  role_name: r_o3c_wizsensor
+  author: Andreas Døhl
+  description: >
+    This role performs the following tasks:
+    1. Fetches an API key for service account creation.
+    2. Creates a service account of type 'sensor'.
+    3. Stores the client ID and client secret in memory.
+    4. Checks if the host is running Debian or RHEL.
+    5. Installs the Wiz Sensor with an option to disable external package repositories.
+  company: O3 CYBER
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: RedHat
+      versions:
+        - 8
+        - 9
+    - name: CentOS
+      versions:
+        - 8
+        - 9
+    - name: Rocky
+      versions:
+        - 8
+        - 9
+    - name: AlmaLinux
+      versions:
+        - 8
+        - 9
+
+  dependencies: []
+
+  galaxy_tags:
+    - monitoring
+    - security
+    - wiz
+    - ansible-role
+    - devops
+    - linux
+
+dependencies: []
