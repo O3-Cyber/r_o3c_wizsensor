@@ -8,6 +8,7 @@ This Ansible role manages the deployment and configuration of the Wiz Sensor. It
 
 - Python must be installed on the target host.
 - The target system must be either Debian-based (Ubuntu, Debian) or Red Hat-based (RHEL, CentOS, Rocky, AlmaLinux).
+- The service account running the tasks need sudo access.
 - Internet access is required for external repositories (unless using internal repositories, see variables).
 - The following packages are required:
   - `curl` (for GraphQL API requests).
