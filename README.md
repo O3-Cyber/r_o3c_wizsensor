@@ -11,7 +11,10 @@ This Ansible role manages the deployment and configuration of the Wiz Sensor. It
 - Internet access is required for external repositories (unless using internal repositories, see variables).
 - The following packages are required:
   - `curl` (for GraphQL API requests).
-
+- Optional SELinux dependencies:
+  - `policycoreutils'
+  - 'policycoreutils-python-utils`
+  - `selinux-policy-devel`
 ---
 
 ## Role Variables
