@@ -1,6 +1,6 @@
 # `r_o3c_wizsensor`
 
-This role manages the deployment and configuration of the Wiz Sensor. It performs tasks such as fetching API keys, creating service accounts, configuring environment files, and installing the Wiz Sensor on Debian-based and Red Hat-based systems. It also installs a SELinux Policy if SELinux is enforced.
+This Ansible role manages the deployment and configuration of the Wiz Sensor. It performs tasks such as fetching API keys, creating service accounts, configuring environment files, and installing the Wiz Sensor on Debian-based and Red Hat-based systems. It also installs a SELinux Policy if SELinux is enforced.
 
 ---
 
@@ -9,7 +9,7 @@ This role manages the deployment and configuration of the Wiz Sensor. It perform
 - Python must be installed on the target host.
 - The target system must be either Debian-based (Ubuntu, Debian) or Red Hat-based (RHEL, CentOS, Rocky, AlmaLinux).
 - Internet access is required for external repositories (unless using internal repositories, see variables).
-- The following packages are required on the Ansible control node:
+- The following packages are required:
   - `curl` (for GraphQL API requests).
 
 ---
