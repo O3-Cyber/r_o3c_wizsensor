@@ -13,4 +13,4 @@ http_proxy: false
 sensor_api_client_id: ""
 sensor_api_client_secret: ""
 ## RHS
-rhs_enabled: true
+rhs_enabled: false
