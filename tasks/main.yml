@@ -1,20 +1,12 @@
 ---
-- name: Check if system is RHEL 
+- name: Check if system is RHEL or Debian
   ansible.builtin.set_fact:
     rhel: "{{ ansible_facts['os_family'] == 'RedHat' }}"
-
-- name: Check if system is Debian
-  ansible.builtin.set_fact:
     debian: "{{ ansible_facts['os_family'] == 'Debian' }}"
-
-- name: Check if SELinux is enforced (only on RHEL)
-  ansible.builtin.debug:
-    msg: "SELinux is {{ ansible_facts['selinux']['status'] }} with mode {{ ansible_facts['selinux']['mode'] }}"
-  when: rhel
 
 - name: Install SELinux policy if SELinux is enforcing (only on RHEL)
   ansible.builtin.include_tasks: install-selinux-policy.yml
-  when: rhel and ansible_facts['selinux']['status'] == 'enabled' and ansible_facts['selinux']['mode'] == 'enforcing'
+  when: rhel and ansible_facts['selinux']['mode'] == 'enforcing'
 
 - name: Create Service Account for Sensor
   ansible.builtin.include_tasks: create-service-account.yml
