@@ -13,8 +13,11 @@
   no_log: true
 
 - name: Download Wiz Sensor install script
-  ansible.builtin.command:
-    cmd: curl -L https://downloads.wiz.io/sensor/sensor_install.sh -o /tmp/sensor_install.sh
+  ansible.builtin.get_url:
+    url: https://downloads.wiz.io/sensor/sensor_install.sh
+    dest: /tmp/sensor_install.sh
+    mode: '0755'  # Ensure the script is executable
+    checksum: sha256:your_checksum_here  # Optional: Add the actual checksum value for validation
   no_log: true
 
 - name: Run Wiz Sensor install script
