@@ -31,7 +31,7 @@
 
 - name: Download Wiz Sensor install script
   ansible.builtin.get_url:
-    url: https://downloads.wiz.io/sensor/sensor_install.sh
+    url: "{{ sensor_install_script_url }}"
     dest: /tmp/sensor_install.sh
     mode: '0750'
   no_log: true

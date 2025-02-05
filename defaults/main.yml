@@ -12,5 +12,6 @@ sensor_proxy_url: ""
 http_proxy: false
 sensor_api_client_id: ""
 sensor_api_client_secret: ""
+sensor_install_script_url: "https://downloads.wiz.io/sensor/sensor_install.sh"
 ## RHS
 rhs_enabled: false
