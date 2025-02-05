@@ -1,9 +1,10 @@
 ---
 - name: Download Wiz Sensor RPM package to /tmp if RHS is enabled
-  ansible.builtin.command:
-    cmd: dnf download --downloaddir=/tmp --arch=x86_64 wiz-sensor
+  ansible.builtin.dnf:
+    name: wiz-sensor
+    download_only: true
+    download_dir: /tmp
   when: rhs_enabled
-  register: package_download
   no_log: true
 
 - name: Find the correct RPM file for the system architecture
@@ -29,8 +30,10 @@
   no_log: true
 
 - name: Download Wiz Sensor install script
-  ansible.builtin.command:
-    cmd: curl -L https://downloads.wiz.io/sensor/sensor_install.sh -o /tmp/sensor_install.sh
+  ansible.builtin.get_url:
+    url: https://downloads.wiz.io/sensor/sensor_install.sh
+    dest: /tmp/sensor_install.sh
+    mode: '0750'
   no_log: true
 
 - name: Run Wiz Sensor install script
