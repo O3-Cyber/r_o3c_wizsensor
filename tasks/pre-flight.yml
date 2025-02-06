@@ -1,0 +1,27 @@
+- name: Check if your tenant endpoint is reachable
+  ansible.builtin.uri:
+    url: "{{ wiz_api_endpoint_url }}"
+    method: GET
+    status_code: [200, 401, 405]
+  register: endpoint_check
+
+- name: Check if auth endpoint is reachable
+  ansible.builtin.uri:
+    url: "{{ wiz_api_auth_url }}"
+    method: GET
+    status_code: [200, 401, 405]
+  register: auth_check
+
+- name: Check if wiz-sensor systemd service exists
+  ansible.builtin.service_facts:
+  no_log: true
+
+- name: Verify if wiz-sensor service is running
+  ansible.builtin.fail:
+    msg: "wiz-sensor service is already running or installed. Aborting playbook."
+  when: "'wiz-sensor.service' in ansible_facts.services and ansible_facts.services['wiz-sensor.service'].state == 'running'"
+
+- name: Stop playbook if any endpoint is unreachable
+  ansible.builtin.fail:
+    msg: "One or more endpoints are unreachable. Aborting playbook."
+  when: endpoint_check is failed or auth_check is failed

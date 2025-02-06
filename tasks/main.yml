@@ -1,4 +1,7 @@
 ---
+- name: Pre-flight checks
+  ansible.builtin.include_tasks: pre-flight.yml
+
 - name: Check if system is RHEL or Debian
   ansible.builtin.set_fact:
     rhel: "{{ ansible_facts['os_family'] == 'RedHat' }}"
