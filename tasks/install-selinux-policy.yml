@@ -1,9 +1,9 @@
-- name: Check if Wiz Sensor SELinux module is installed
+- name: Check if Wiz Sensor SELinux policy is installed
   ansible.builtin.shell: semodule -l | grep -q '^wiz-sensor$'
   register: selinux_module_check
   failed_when: false
   changed_when: false
-  no_log: true
+#  no_log: true
 
 - name: Install SELinux tools
   ansible.builtin.dnf:
@@ -13,7 +13,7 @@
       - selinux-policy-devel
     state: present
   when: selinux_module_check.rc != 0
-  no_log: true
+#  no_log: true
 
 - name: Copy SELinux policy file
   ansible.builtin.copy:
@@ -21,22 +21,32 @@
     dest: /tmp/wiz-sensor.te
     mode: "0640"
   when: selinux_module_check.rc != 0
-  no_log: true
+#  no_log: true
 
-- name: Compile SELinux module from .te if not installed
+- name: Compile SELinux policy from .te if not installed
   ansible.builtin.command:
     cmd: checkmodule -M -m -o /tmp/wiz-sensor.mod /tmp/wiz-sensor.te
   when: selinux_module_check.rc != 0
-  no_log: true
+#  no_log: true
 
 - name: Build semodule package if not installed
   ansible.builtin.command:
     cmd: semodule_package -o /tmp/wiz-sensor.pp -m /tmp/wiz-sensor.mod
   when: selinux_module_check.rc != 0
-  no_log: true
+#  no_log: true
 
-- name: Install SELinux module if not installed
+- name: Install SELinux policy if not installed
   ansible.builtin.command:
     cmd: semodule -i /tmp/wiz-sensor.pp
   when: selinux_module_check.rc != 0
-  no_log: true
+#  no_log: true
+
+- name: Remove all temporary files related to SELinux policy
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/wiz-sensor.te
+    - /tmp/wiz-sensor.mod
+    - /tmp/wiz-sensor.pp
+#  no_log: true
