@@ -10,24 +10,24 @@
     - 'WIZ_API_CLIENT_SECRET="{{ sensor_api_client_secret }}"'
     - 'WIZ_HTTP_PROXY_URL="{{ sensor_proxy_url }}"'
   when: item.split('=')[1] != '""'
-#  no_log: true
+  no_log: true
 
 - name: Download Wiz Sensor install script
   ansible.builtin.command:
     cmd: curl -L https://downloads.wiz.io/sensor/sensor_install.sh -o /tmp/sensor_install.sh
-#  no_log: true
+  no_log: true
 
 - name: Run Wiz Sensor install script
   ansible.builtin.command:
     cmd: sudo -E bash /tmp/sensor_install.sh
-#  no_log: true
+  no_log: true
 
 - name: Remove Wiz Sensor environment variables after installation
   ansible.builtin.lineinfile:
     path: /etc/environment
     regexp: '^(WIZ_API_CLIENT_ID|WIZ_API_CLIENT_SECRET|WIZ_HTTP_PROXY_URL)='
     state: absent
-#  no_log: true
+  no_log: true
 
 - name: Remove all temporary files related to Wiz Sensor
   ansible.builtin.file:
@@ -36,4 +36,4 @@
   loop:
     - /tmp/sensor_install.sh
     - /tmp/wiz_repo_public_key.gpg
-#  no_log: true
+  no_log: true

@@ -5,18 +5,14 @@
 - name: Install SELinux policy if SELinux is enforcing (only on RHEL)
   ansible.builtin.include_tasks: install-selinux-policy.yml
   when: rhel and ansible_facts['selinux']['mode'] == 'enforcing'
-  no_log: true
 
 - name: Create Service Account for Sensor
   ansible.builtin.include_tasks: create-service-account.yml
-  no_log: true
 
 - name: Install Wiz Sensor on Debian systems
   ansible.builtin.include_tasks: install-sensor-debian.yml
   when: debian
-  no_log: true
 
 - name: Install Wiz Sensor on RHEL systems
   ansible.builtin.include_tasks: install-sensor-rhel.yml
   when: rhel
-  no_log: true
