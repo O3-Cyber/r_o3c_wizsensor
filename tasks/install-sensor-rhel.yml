@@ -1,18 +1,18 @@
 ---
-- name: Download Wiz Sensor RPM package to /tmp if RHS is enabled
-  ansible.builtin.command:
-    cmd: dnf download --downloaddir=/tmp --arch=x86_64 wiz-sensor
-  when: rhs_enabled
-  register: package_download
+- name: Check if wiz-sensor package is available
+  ansible.builtin.dnf:
+    name: wiz-sensor
+    state: present
+  check_mode: yes
+  register: wiz_sensor_package
+  ignore_errors: yes
+  changed_when: false
   no_log: true
 
-- name: Find the correct RPM file for the system architecture
-  ansible.builtin.find:
-    paths: /tmp
-    patterns: "*wiz-sensor-*.rpm"
-  when: rhs_enabled
-  register: rpm_file
-  no_log: true
+- name: Set environment variable if wiz-sensor package is available
+  ansible.builtin.set_fact:
+    skip_repo: "1"
+  when: wiz_sensor_package.rc == 0
 
 - name: Ensure environment variables are present in /etc/environment
   ansible.builtin.lineinfile:
@@ -24,13 +24,13 @@
     - 'WIZ_API_CLIENT_ID="{{ sensor_api_client_id }}"'
     - 'WIZ_API_CLIENT_SECRET="{{ sensor_api_client_secret }}"'
     - 'WIZ_HTTP_PROXY_URL="{{ sensor_proxy_url }}"'
-    - 'LOCAL_PACKAGE="{{ rpm_file.files[0].path if rhs_enabled else "" }}"'
+    - 'SKIP_ADD_REPOSITORY={{ skip_repo }}'
   when: item.split('=')[1] != '""'
   no_log: true
 
 - name: Download Wiz Sensor install script
   ansible.builtin.command:
-    cmd: curl -L https://downloads.wiz.io/sensor/sensor_install.sh -o /tmp/sensor_install.sh
+    cmd: "curl -L {{ sensor_install_script_url }} -o /tmp/sensor_install.sh"
   no_log: true
 
 - name: Run Wiz Sensor install script
@@ -41,7 +41,7 @@
 - name: Remove Wiz Sensor environment variables after installation
   ansible.builtin.lineinfile:
     path: /etc/environment
-    regexp: '^(WIZ_API_CLIENT_ID|WIZ_API_CLIENT_SECRET|WIZ_HTTP_PROXY_URL|LOCAL_PACKAGE)='
+    regexp: '^(WIZ_API_CLIENT_ID|WIZ_API_CLIENT_SECRET|WIZ_HTTP_PROXY_URL|SKIP_ADD_REPOSITORY)='
     state: absent
   no_log: true
 
@@ -51,6 +51,5 @@
     state: absent
   loop:
     - /tmp/sensor_install.sh
-    - "{{ rpm_file.files[0].path if rhs_enabled else '' }}"
   when: item != ""
   no_log: true

@@ -14,7 +14,7 @@
 
 - name: Download Wiz Sensor install script
   ansible.builtin.command:
-    cmd: curl -L https://downloads.wiz.io/sensor/sensor_install.sh -o /tmp/sensor_install.sh
+    cmd: "curl -L {{ sensor_install_script_url }} -o /tmp/sensor_install.sh"
   no_log: true
 
 - name: Run Wiz Sensor install script
