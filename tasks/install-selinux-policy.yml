@@ -3,6 +3,7 @@
   register: selinux_module_check
   failed_when: false
   changed_when: false
+  become: true  
   no_log: true
 
 - name: Install SELinux tools
@@ -13,6 +14,7 @@
       - selinux-policy-devel
     state: present
   when: selinux_module_check.rc != 0
+  become: true  
   no_log: true
 
 - name: Copy SELinux policy file
@@ -39,6 +41,7 @@
   ansible.builtin.command:
     cmd: semodule -i /tmp/wiz-sensor.pp
   when: selinux_module_check.rc != 0
+  become: true  
   no_log: true
 
 - name: Remove all temporary files related to SELinux policy

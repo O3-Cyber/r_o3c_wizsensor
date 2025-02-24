@@ -9,6 +9,7 @@ wiz_api_audience: "wiz-api"
 sensor_sa_name: "sensor-sa-{{ ansible_hostname }}"
 ## Wiz Sensor
 sensor_proxy_url: ""
+skip_repo: ""
 http_proxy: false
 sensor_api_client_id: ""
 sensor_api_client_secret: ""
