@@ -1,6 +1,6 @@
 ---
 - name: Check if wiz-sensor package is available
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     name: wiz-sensor
     state: present
   check_mode: yes
