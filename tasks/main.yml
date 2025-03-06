@@ -4,7 +4,7 @@
 
 - name: Install SELinux policy if SELinux is enforcing (only on RHEL)
   ansible.builtin.include_tasks: install-selinux-policy.yml
-  when: rhel and ansible_facts['selinux']['mode'] == 'enforcing'
+  when: rhel and ansible_facts['selinux'].get('mode', 'disabled') == 'enforcing'
 
 - name: Create Service Account for Sensor
   ansible.builtin.include_tasks: create-service-account.yml
