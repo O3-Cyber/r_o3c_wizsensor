@@ -21,12 +21,17 @@
   ansible.builtin.service_facts:
   no_log: true
 
-- name: Verify if wiz-sensor service is running
-  ansible.builtin.fail:
-    msg: "wiz-sensor service is already running or installed. Aborting playbook."
+- name: Mark hosts where wiz-sensor is already running
+  ansible.builtin.set_fact:
+    sensor_installed: true
   when: "'wiz-sensor.service' in ansible_facts.services and ansible_facts.services['wiz-sensor.service'].state == 'running'"
 
-- name: Stop playbook if any endpoint is unreachable
-  ansible.builtin.fail:
-    msg: "One or more endpoints are unreachable. Aborting playbook."
+- name: Skip hosts where wiz-sensor is already installed
+  ansible.builtin.debug:
+    msg: "wiz-sensor service is already running. Skipping installation."
+  when: sensor_installed
+
+- name: Give warning if any endpoint is unreachable
+  ansible.builtin.debug:
+    msg: "One or more endpoints are unreachable. Sensor deployment might fail"
   when: endpoint_check is failed or auth_check is failed
