@@ -1,9 +1,4 @@
 ---
-- name: Check if HTTP proxy is enabled
-  ansible.builtin.set_fact:
-    proxy_enabled: "{{ http_proxy | bool }}"
-  no_log: true
-
 - name: Ensure environment variables are present in /etc/environment
   ansible.builtin.lineinfile:
     path: /etc/environment
@@ -14,9 +9,7 @@
     - 'WIZ_API_CLIENT_ID="{{ sensor_api_client_id }}"'
     - 'WIZ_API_CLIENT_SECRET="{{ sensor_api_client_secret }}"'
     - 'WIZ_HTTP_PROXY_URL="{{ sensor_proxy_url }}"'
-  when: >
-    (not item.startswith('WIZ_HTTP_PROXY_URL') and item.split('=')[1] != '""') or
-    (item.startswith('WIZ_HTTP_PROXY_URL') and proxy_enabled)
+  when: item.split('=')[1] != '""'
   no_log: true
   become: true
 

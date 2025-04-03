@@ -24,7 +24,7 @@
   loop:
     - 'WIZ_API_CLIENT_ID="{{ sensor_api_client_id }}"'
     - 'WIZ_API_CLIENT_SECRET="{{ sensor_api_client_secret }}"'
-    - 'WIZ_HTTP_PROXY_URL="{{ sensor_proxy_url }}"'
+    - '{{ "WIZ_HTTP_PROXY_URL=\"" + sensor_proxy_url + "\"" if http_proxy | bool else omit }}'
     - "{{ 'SKIP_ADD_REPOSITORY=1' if skip_repo == '1' else omit }}"
   when: item != '' and '=' in item and item.split('=')[1] != '""'
   become: true
