@@ -1,3 +1,15 @@
+- name: Verify API variables are set
+  ansible.builtin.assert:
+    that:
+      - (wiz_api_client_id and wiz_api_client_secret) or (sensor_api_client_id and sensor_api_client_secret) != ""
+
+- name: Verify variables are set if proxy is used
+  ansible.builtin.assert:
+    that:
+      - sensor_proxy_url != ""
+      - sensor_install_script_url != "https://downloads.wiz.io/sensor/sensor_install.sh"
+  when: http_proxy
+
 - name: Check if system is RHEL or Debian
   ansible.builtin.set_fact:
     rhel: "{{ ansible_facts['os_family'] == 'RedHat' }}"
@@ -9,6 +21,7 @@
     method: GET
     status_code: [200, 401, 405]
   register: endpoint_check
+  when: not http_proxy
 
 - name: Check if auth endpoint is reachable
   ansible.builtin.uri:
@@ -16,6 +29,7 @@
     method: GET
     status_code: [200, 401, 405]
   register: auth_check
+  when: not http_proxy
 
 - name: Check if wiz-sensor systemd service exists
   ansible.builtin.service_facts:
