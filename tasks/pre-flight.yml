@@ -9,6 +9,7 @@
     method: GET
     status_code: [200, 401, 405]
   register: endpoint_check
+  when: sensor_proxy_url == ''
 
 - name: Check if auth endpoint is reachable
   ansible.builtin.uri:
@@ -16,6 +17,7 @@
     method: GET
     status_code: [200, 401, 405]
   register: auth_check
+  when: sensor_proxy_url == ''
 
 - name: Check if wiz-sensor systemd service exists
   ansible.builtin.service_facts:
