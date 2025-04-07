@@ -43,8 +43,7 @@ These variables are used to authenticate and communicate with Wiz's GraphQL API:
 - `sensor_sa_name`: Default: `"sensor-sa-{{ ansible_hostname }}"`. Name of the sensor service account that will be created dynamically.
 
 ### Local repositories and other settings
-- `http_proxy`: Default: `false`. Set to `true` if you need a HTTP Proxy to reach www
-- `sensor_proxy_url`: Default: `blank`. Combine with `http_proxy` to set the Proxy URL. E.g: `http://user:pass@x.x.x.x:yyyy`
+- `sensor_proxy_url`: Default: `blank`. Enable HTTP Proxy URL if needed. Will skip proxy if left blank. E.g: `http://user:pass@x.x.x.x:yyyy`
 - `skip_repo`: Default: `false`. Checks if wiz-sensor rpm package is available and passes `SKIP_ADD_REPOSITORY` to the install script.
 ---
 
