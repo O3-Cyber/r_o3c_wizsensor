@@ -25,6 +25,8 @@
     - 'WIZ_API_CLIENT_ID="{{ sensor_api_client_id }}"'
     - 'WIZ_API_CLIENT_SECRET="{{ sensor_api_client_secret }}"'
     - 'WIZ_HTTP_PROXY_URL="{{ sensor_proxy_url }}"'
+    - 'WIZ_SUBSCRIPTION_EXTERNAL_ID="{{ sensor_subscription_external_id }}"'
+    - 'WIZ_SUBSCRIPTION_TAGS=''{{ sensor_subscription_tags | items2dict | to_json | replace(" ", "") }}'''
     - "{{ 'SKIP_ADD_REPOSITORY=1' if skip_repo == '1' else omit }}"
   when: item != '' and '=' in item and item.split('=')[1] != '""'
   become: true
@@ -44,7 +46,7 @@
 - name: Remove Wiz Sensor environment variables after installation
   ansible.builtin.lineinfile:
     path: /etc/environment
-    regexp: '^(WIZ_API_CLIENT_ID|WIZ_API_CLIENT_SECRET|WIZ_HTTP_PROXY_URL|SKIP_ADD_REPOSITORY)='
+    regexp: '^(WIZ_API_CLIENT_ID|WIZ_API_CLIENT_SECRET|WIZ_HTTP_PROXY_URL|WIZ_SUBSCRIPTION_EXTERNAL_ID|WIZ_SUBSCRIPTION_TAGS|SKIP_ADD_REPOSITORY)='
     state: absent
   become: true
   no_log: true

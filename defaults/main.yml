@@ -8,6 +8,10 @@ wiz_api_bearer_token: ""
 wiz_api_audience: "wiz-api"
 sensor_sa_name: "sensor-sa-{{ ansible_hostname }}"
 ## Wiz Sensor
+sensor_subscription_external_id: ""
+sensor_subscription_tags: []
+  #- key: deployed-by
+  #  value: ansible
 sensor_proxy_url: ""
 skip_repo: ""
 sensor_installed: false
