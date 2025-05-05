@@ -45,6 +45,8 @@ These variables are used to authenticate and communicate with Wiz's GraphQL API:
 ### Local repositories and other settings
 - `sensor_proxy_url`: Default: `blank`. Enable HTTP Proxy URL if needed. Will skip proxy if left blank. E.g: `http://user:pass@x.x.x.x:yyyy`
 - `skip_repo`: Default: `false`. Checks if wiz-sensor rpm package is available and passes `SKIP_ADD_REPOSITORY` to the install script.
+- `sensor_subscription_external_id`: Default: `blank`. Can be used to set a custom Subscription Sensor Group (e.g. on-premise hosts running Wiz Sensor only)
+- `sensor_subscription_tags`: Defaul: `blank`. Can be used to set tags on deployment. Use with key-value as example in defaults file.
 ---
 
 ## Dependencies
