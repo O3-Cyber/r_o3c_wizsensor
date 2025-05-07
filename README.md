@@ -11,6 +11,7 @@ This Ansible role manages the deployment and configuration of the Wiz Sensor. It
   *\<Playbook stops if one of the endpoints does not respond or the systemd service is running\>*
 * **Compiles and installs SELinux policy if SELinux is enforced.**
 * **Uses the Wiz GraphQL API to create a Service Account for the sensor** with the name `sensor_sa_$HOSTNAME`.
+* **Uses the Wiz GraphQL API to rotate the secret if a Service Account exists**
 * **Installs the Wiz sensor using the official install script** (supports both RedHat and Ubuntu systems).
 * **Deletes temporary files and clears environment variables** (including sensitive data like API_SECRET).
 
