@@ -7,7 +7,7 @@
   ansible.builtin.uri:
     url: "{{ wiz_api_endpoint_url }}"
     method: GET
-    status_code: [200, 401, 405]
+    status_code: [200, 400, 401, 405]
   register: endpoint_check
   when: sensor_proxy_url == ''
 
@@ -15,7 +15,7 @@
   ansible.builtin.uri:
     url: "{{ wiz_api_auth_url }}"
     method: GET
-    status_code: [200, 401, 405]
+    status_code: [200, 400, 401, 405]
   register: auth_check
   when: sensor_proxy_url == ''
 
